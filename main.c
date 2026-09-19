@@ -293,7 +293,7 @@ double integrand_expression(double x)
 {
     // Функція, інтеграл якої обчислюємо:
     //
-    // f(x) = (x^3/20) - 5*x^2 + 1000
+    // f(x) = x^2
 
-    return pow(x, 3)/20.0 - 5*pow(x, 2) + 1000;
+    return pow(x, 2);
 }
