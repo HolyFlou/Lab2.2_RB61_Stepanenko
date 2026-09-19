@@ -13,6 +13,11 @@ double num_comput_integral_r_re(double left_boundary_a,
     double right_boundary_b, unsigned int intervals);
 
 // Функція обчислення інтеграла
+// методом трапецій
+double num_comput_integral_trap(double left_boundary_a,
+    double right_boundary_b, unsigned int intervals);
+
+// Функція обчислення інтеграла
 // методом Симпсона
 double num_comput_integral_Simps(double left_boundary_a,
     double right_boundary_b, unsigned int intervals);
@@ -79,17 +84,18 @@ int main()
         do
         {
             printf("\nChoose the method of calculating:\n");
-            printf("\t1. By Left Rectangles :\n");
+            printf("\t1. By Left Rectangles:\n");
             printf("\t2. By Right Rectangles:\n");
-            printf("\t3. By Integral Simpson's method (parabola method):\n");
+            printf("\t3. By Trapezoids:\n");
+            printf("\t4. By Simpson's method (parabola method):\n");
 
             scanf("%u", &var);
 
             // Перевірка правильності вибору
-            if (var != 1 && var != 2 && var != 3)
+            if (var != 1 && var != 2 && var != 3 && var != 4)
                 printf("\nYou are mistaken\n");
 
-        } while (var != 1 && var != 2 && var != 3);
+        } while (var != 1 && var != 2 && var != 3 && var != 4);
 
 
         // Очищення консолі
@@ -151,8 +157,22 @@ int main()
             }
             break;
 
-            // Метод Симпсона
+            // Метод трапецій
+
             case 3:
+            {
+                // Виклик функції обчислення інтеграла
+                // методом трапецій
+                integral_s = num_comput_integral_trap(left_boundary_a, right_boundary_b, intervals);
+
+                printf("\n\n\t======*Trapezoid method*======\n");
+
+                printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %u", left_boundary_a, right_boundary_b, integral_s, intervals);
+            }
+            break;
+
+            // Метод Симпсона
+            case 4:
             {
                 // Виклик функції обчислення інтеграла
                 // методом Симпсона
@@ -235,6 +255,42 @@ double num_comput_integral_r_re(double left_boundary_a, double right_boundary_b,
     }
 
     // Помножуємо суму на довжину інтервалу
+    return integral_s * h;
+}
+
+// Функція обчислення інтеграла
+// методом трапецій
+
+double num_comput_integral_trap(double left_boundary_a, double right_boundary_b, unsigned int intervals)
+{
+    double integral_s = 0, x, h;
+
+    unsigned int i;
+
+    // Обчислюємо довжину одного інтервалу
+    //
+    // h = (b - a) / n
+    h = (right_boundary_b - left_boundary_a) / intervals;
+
+    // Початкова сума містить половину
+    // значень функції на крайніх точках
+    //
+    // (f(a) + f(b)) / 2
+    integral_s = (integrand_expression(left_boundary_a) + integrand_expression(right_boundary_b)) / 2;
+
+    // Обчислюємо значення функції
+    // у внутрішніх точках
+    for (i = 1; i < intervals; i++)
+    {
+        // Обчислюємо координату поточної точки
+        x = left_boundary_a + i * h;
+
+        // Додаємо значення функції
+        integral_s += integrand_expression(x);
+    }
+
+
+    // Множимо суму на ширину інтервалу
     return integral_s * h;
 }
 
