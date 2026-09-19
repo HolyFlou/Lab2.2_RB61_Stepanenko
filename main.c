@@ -3,11 +3,11 @@
 #include <math.h>
 
 double num_comput_integral_l_re(double left_boundary_a,
-double right_boundary_b, unsigned int intervals);
+    double right_boundary_b, unsigned int intervals);
 double num_comput_integral_r_re(double left_boundary_a,
-double right_boundary_b, unsigned int intervals);
+    double right_boundary_b, unsigned int intervals);
 double num_comput_integral_Simps (double left_boundary_a,
-double right_boundary_b, unsigned int intervals);
+    double right_boundary_b, unsigned int intervals);
 double integrand_expression( double x );
 
 int main()
@@ -16,6 +16,7 @@ int main()
     double measurement_error=0, I1=0, I2=0;
     int intervals, var, i;
     double integral_s=0;
+
     while(1)
     {
         printf("\n\tEnter the left boundary \n X(first)=");
@@ -36,10 +37,10 @@ int main()
             printf("\nChoose the method of calculating:\n");
             printf("\t1. By Left Rectangles :\n");
             printf("\t2. By Right Rectangles:\n");
-            printf("\t4. By ntegral_Simps's method (parabola method):\n");
+            printf("\t3. By ntegral_Simps's method (parabola method):\n");
             scanf("%u", &var);
             if (var!=1 && var!=2 &&var!=3 )
-            printf("\nYou are mistaken\n");
+                printf("\nYou are mistaken\n");
         }while (var!=1 && var!=2 && var!=3 );
 
         system("cls");
@@ -103,18 +104,32 @@ int main()
     {
         double integral_s=0, x=0, h;
         unsigned int i;
+
         h = ( right_boundary_b - left_boundary_a ) / intervals;
         x = left_boundary_a;
+
         for (i = 0; i < intervals; i++ ){
             integral_s += integrand_expression(x);
             x += h;
         }
+
         return integral_s*h;
     }
     double num_comput_integral_r_re(double left_boundary_a,
         double right_boundary_b, unsigned int n)
     {
-    ;
+        double integral_s=0, x=0, h;
+        unsigned int i;
+
+        h = ( right_boundary_b - left_boundary_a ) / n;
+        x = left_boundary_a + h;
+
+        for (i = 0; i < n; i++ ){
+            integral_s += integrand_expression(x);
+            x += h;
+        }
+        
+        return integral_s*h;
     }
     double num_comput_integral_Simps (double left_boundary_a,
         double right_boundary_b, unsigned int n)
